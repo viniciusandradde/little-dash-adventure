@@ -54,6 +54,7 @@ Veja:
 - [Arquitetura](docs/ARCHITECTURE.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Plano de QA](docs/QA.md)
+- [Catálogo de arte e checklist de integração](docs/ART_ASSETS.md)
 - [Contribuição](CONTRIBUTING.md)
 - [Avisos de terceiros](THIRD_PARTY_NOTICES.md)
 
