@@ -1,17 +1,17 @@
 # Avisos de terceiros
 
 ## Dependências
-As dependências de desenvolvimento estão declaradas em package.json. Vite é utilizado como ferramenta de desenvolvimento e build. Antes de adicionar dependência de runtime, revisar licença, manutenção, tamanho e superfície de segurança.
+As dependências de desenvolvimento estão declaradas em package.json. Vite é utilizado como ferramenta de desenvolvimento e build. Não há dependências de runtime.
 
 ## Conteúdo e assets
-O projeto deve utilizar ilustrações, áudio, fontes e efeitos:
-- produzidos originalmente para o projeto; ou
-- obtidos com licença compatível e origem registrada.
+| Ativo | Origem | Uso |
+|---|---|---|
+| `public/assets/worlds/*.webp` | Ilustrações geradas para o projeto | Fundos dos mundos |
+| `public/assets/music/*.mp3` | Trilhas instrumentais geradas para o projeto com ElevenLabs Music (novembro de 2026), re-encodadas a 112 kbps | Trilha sonora por mundo |
+| Personagens, obstáculos, interface e efeitos sonoros | Desenhados e sintetizados em código neste repositório | Jogo |
 
 Não copiar personagens, trilhas, sprites, marcas ou efeitos sonoros de jogos comerciais.
-
-## Registro de ativos
-Manter para cada ativo externo: nome, autor, URL de origem, licença, data de obtenção e arquivo correspondente. Não publicar ativos sem comprovação de direito de uso.
+Manter esta tabela atualizada para cada ativo externo com nome, origem, licença e data.
 
 ## Licença do projeto
 Consulte LICENSE para os termos aplicáveis ao código deste repositório.

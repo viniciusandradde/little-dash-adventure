@@ -1,21 +1,15 @@
 {
-  "id": "./",
   "name": "Little Dash Adventure",
   "short_name": "Little Dash",
-  "description": "Uma aventura colorida, segura e divertida para crianças.",
+  "description": "Uma aventura rítmica e sem punições para crianças.",
   "lang": "pt-BR",
   "start_url": "./",
   "scope": "./",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "landscape",
-  "background_color": "#fff5e8",
+  "background_color": "#fff6ea",
   "theme_color": "#6c55d9",
   "icons": [
-    {
-      "src": "./assets/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    { "src": "./assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
   ]
 }

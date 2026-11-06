@@ -1,4 +1,4 @@
-const CACHE = "little-dash-adventure-v4";
+const CACHE = "little-dash-adventure-v5";
 const BASE = self.registration.scope;
 const CORE = [
   "", "index.html", "manifest.webmanifest", "assets/icon.svg",
@@ -8,8 +8,15 @@ const CORE = [
   "assets/worlds/space-adventure.webp"
 ].map((path) => new URL(path, BASE).toString());
 
+const OPTIONAL = ["assets/music/candy.mp3", "assets/music/dino.mp3", "assets/music/ocean.mp3", "assets/music/space.mp3", "assets/music/menu.mp3"]
+  .map((path) => new URL(path, BASE).toString());
+
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(CORE)));
+  event.waitUntil(caches.open(CACHE).then(async (cache) => {
+    await cache.addAll(CORE);
+    // Soundtracks are large and optional: cache what exists without failing the install.
+    await Promise.all(OPTIONAL.map((url) => cache.add(url).catch(() => {})));
+  }));
   self.skipWaiting();
 });
 self.addEventListener("activate", (event) => {

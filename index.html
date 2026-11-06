@@ -4,16 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#6c55d9" />
-    <meta name="description" content="Little Dash Adventure: uma aventura colorida, segura e divertida para crianças." />
+    <meta name="description" content="Little Dash Adventure: uma aventura rítmica, colorida e segura para crianças." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./assets/icon.svg" />
     <title>Little Dash Adventure</title>
   </head>
   <body>
-    <main id="app" class="app-shell">
+    <main id="app" class="app-shell" data-screen="home">
       <header class="topbar">
         <div class="brand"><span class="brand-mark">★</span><span>Little Dash Adventure</span></div>
-        <button id="sound-toggle" class="icon-button" type="button" aria-label="Ativar ou desativar sons">🔊</button>
       </header>
       <section id="screen" class="screen" aria-live="polite"></section>
     </main>

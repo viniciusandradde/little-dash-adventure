@@ -2,151 +2,86 @@
 
 # 🍭 LITTLE DASH ADVENTURE
 
-### Pequenas aventuras. Grandes descobertas. Diversão sem limites.
+### Um jogo de ritmo e pulos feito para crianças. Sem punições, com muita música.
 
-**Um mundo mágico criado para crianças explorarem, brincarem e descobrirem no seu próprio ritmo.**
-
-<br />
-
-[🎮 Conheça a aventura](#-uma-aventura-feita-para-crianças) · [🌈 Explore os mundos](#-quatro-mundos-para-descobrir) · [💛 Nosso compromisso](#-diversão-com-tranquilidade-para-a-família)
+**Toque no tempo da música, pule obstáculos amigáveis, colete estrelas e moedas secretas em quatro mundos.**
 
 <br />
 
-<img src="public/assets/worlds/candy-kingdom.webp" alt="Reino dos Doces — Little Dash Adventure" width="48%" />
-<img src="public/assets/worlds/dinosaur-island.webp" alt="Ilha dos Dinossauros — Little Dash Adventure" width="48%" />
+[🎮 Jogar a versão de teste](https://viniciusandradde.github.io/little-dash-adventure/) · [📊 Análise e Sistema Premium](docs/ANALISE-PREMIUM.md) · [🧭 Roadmap](docs/ROADMAP.md)
 
 <br />
 
-<img src="public/assets/worlds/underwater.webp" alt="Fundo do Mar — Little Dash Adventure" width="48%" />
-<img src="public/assets/worlds/space-adventure.webp" alt="Aventura Espacial — Little Dash Adventure" width="48%" />
+<img src="public/assets/worlds/candy-kingdom.webp" alt="Reino dos Doces" width="48%" />
+<img src="public/assets/worlds/dinosaur-island.webp" alt="Ilha dos Dinossauros" width="48%" />
 
 <br />
 
-<sub>UM UNIVERSO DE IMAGINAÇÃO • CARINHO • DESCOBERTAS</sub>
+<img src="public/assets/worlds/underwater.webp" alt="Fundo do Mar" width="48%" />
+<img src="public/assets/worlds/space-adventure.webp" alt="Aventura Espacial" width="48%" />
 
 </div>
 
 ---
 
-## ✨ Uma aventura feita para crianças
+## ✨ O jogo
 
-Little Dash Adventure é uma experiência de jogo acolhedora, colorida e intuitiva, pensada especialmente para crianças pequenas. Cada toque abre caminho para uma nova descoberta: pular, explorar cenários encantadores, encontrar estrelas e avançar por aventuras cheias de imaginação.
+Little Dash Adventure é um *rhythm platformer* no espírito de Geometry Dash, redesenhado para
+crianças pequenas: o personagem corre sozinho, um toque faz pular, segurar o dedo faz voar.
+As fases são construídas em **grade de batidas**, então cada pulo cai no tempo da trilha do mundo.
 
-Aqui, o mais importante não é vencer ou competir. É experimentar, descobrir e se divertir.
+- **4 mundos, 12 fases autorais** (39 a 66 segundos cada) com espinhos amigáveis, blocos,
+  plataformas, buracos, pads, orbs, portais de velocidade, portais de voo, checkpoints,
+  estrelas e 3 moedas secretas por fase.
+- **Modo criança (padrão):** errar nunca pune. Espinho = quique por cima, buraco = a bolha
+  mágica resgata, bloco baixo = o personagem sobe. Toda fase chega à meta, mesmo sem toques.
+- **Modo Desafio (opcional):** tropeçou, volta ao último checkpoint, com contador de
+  tentativas e sem texto de derrota. Para crianças maiores que querem o desafio de verdade.
+- **Trilha sonora própria por mundo** (120, 112, 100 e 128 BPM) e 13 efeitos sonoros
+  sintetizados; a cena pulsa no ritmo.
+- **4 personagens** animados (Cubinho, Dino, Estrelinha e Foguetinho).
+- **Progressão:** avaliação de 1 a 3 estrelas por fase, moedas, álbum de 12 figurinhas,
+  medalha "sem tropeços", melhor tempo e botão "próxima aventura".
+- **Ajustes:** sons, música, menos movimento, Modo Desafio, apagar progresso.
 
-**Simples de jogar:** um toque faz o personagem pular e seguir sua jornada.
+## 💛 Compromissos com a família
 
-**Feito para incentivar a exploração:** mundos diferentes, personagens carismáticos e pequenas surpresas pelo caminho.
+- Sem anúncios, sem compras, sem chat, sem cadastro e sem rastreamento.
+- Sem Game Over, sem vidas e sem perda de estrelas.
+- Funciona offline depois do primeiro carregamento (PWA); nenhum recurso é baixado de terceiros em tempo de execução.
+- O progresso fica apenas no aparelho.
 
-**No ritmo da criança:** uma experiência amigável, com assistência para tornar a brincadeira mais acessível.
+## 🕹️ Controles
 
-## 🌈 Quatro mundos para descobrir
+| Ação | Toque | Teclado (QA) |
+|---|---|---|
+| Pular / segurar para pulos seguidos | Toque na tela | Espaço, ↑ ou W |
+| Voar (dentro da bolha) | Segurar | Segurar espaço |
+| Pausar | Botão ⏸ | P ou Esc |
 
-<details>
-<summary><strong>🍭 Reino dos Doces</strong> — Um passeio delicioso por um mundo colorido</summary>
+## 🛠️ Desenvolvimento
 
-Nuvens fofinhas, pirulitos gigantes, chocolates e castelos que parecem saídos de um sonho.
+```bash
+npm install
+npm run dev        # http://localhost:5173/little-dash-adventure/
+npm test           # 22 testes (catálogo, simulação, progresso)
+npm run build
+npm run preview    # http://localhost:4173/little-dash-adventure/?qa=1
+```
 
-</details>
+- `src/game/levels.js` — construtor de fases em batidas e as 12 composições.
+- `src/game/simulation.js` — física determinística e regras (sem DOM, testável em Node).
+- `src/game/renderer.js` e `src/game/characters.js` — desenho em Canvas.
+- `src/services/audio.js` — trilhas gravadas com fallback para sequenciador procedural; efeitos.
+- `src/services/storage.js` — progresso versionado (v2) com migração.
+- `docs/` — PRD, arquitetura, QA, roadmap e a [análise detalhada](docs/ANALISE-PREMIUM.md).
 
-<details>
-<summary><strong>🦕 Ilha dos Dinossauros</strong> — Uma expedição entre amigos pré-históricos</summary>
-
-Dinossauros simpáticos, ovos misteriosos, vegetação exuberante e cenários cheios de vida.
-
-</details>
-
-<details>
-<summary><strong>🐠 Fundo do Mar</strong> — Descobertas nas profundezas encantadas</summary>
-
-Peixes curiosos, bolhas brilhantes, corais coloridos, tartarugas e tesouros escondidos.
-
-</details>
-
-<details>
-<summary><strong>🚀 Aventura Espacial</strong> — Uma viagem pelo universo da imaginação</summary>
-
-Planetas, estrelas, foguetes e paisagens espaciais para despertar a curiosidade.
-
-</details>
-
-## 🧸 Amigos para acompanhar cada descoberta
-
-Quatro personagens especiais estão prontos para embarcar nessa jornada:
-
-| Personagem | Personalidade |
-|---|---|
-| 🟦 **Cubinho** | Curioso, corajoso e sempre pronto para começar |
-| 🦖 **Dino** | Um explorador divertido que adora novas descobertas |
-| ⭐ **Estrelinha** | Brilhante, alegre e cheia de energia |
-| 🚀 **Foguetinho** | Aventureiro, sonhador e apaixonado pelo espaço |
-
-## 💛 Diversão com tranquilidade para a família
-
-A experiência foi idealizada com a infância e a tranquilidade dos responsáveis em mente.
-
-- **Sem anúncios:** a brincadeira não é interrompida por publicidade.
-- **Sem compras dentro do jogo:** não há ofertas ou compras direcionadas à criança.
-- **Sem chat ou interação com desconhecidos:** a aventura é individual e protegida.
-- **Sem cadastro infantil:** a proposta não exige criação de conta pela criança.
-- **Sem competição punitiva:** não há vidas a perder nem castigos por tentar novamente.
-- **Som opcional:** a família pode escolher brincar com ou sem áudio.
-- **Progresso no próprio dispositivo:** a jornada pode continuar de onde parou.
-
-O compromisso é oferecer um ambiente de diversão simples, respeitoso e apropriado para a proposta infantil.
-
-## 🎁 O que torna essa aventura especial?
-
-- Uma experiência visual alegre e acolhedora.
-- Controles simples, pensados para pequenas mãos.
-- Personagens que convidam à identificação e à imaginação.
-- Quatro universos temáticos para explorar.
-- Fases curtas e objetivos fáceis de compreender.
-- Incentivo à curiosidade, à coordenação e à descoberta.
-- Uma experiência sem pressão por desempenho.
-
-## 🗺️ Uma jornada em construção
-
-Little Dash Adventure está em desenvolvimento. A experiência está sendo construída por etapas, com atenção especial à qualidade da brincadeira, à segurança infantil e à experiência das famílias.
-
-**Próximas novidades da aventura:**
-
-1. Dar vida aos personagens com animações especiais.
-2. Criar desafios, estrelas e interações em cada cenário.
-3. Desenvolver as jornadas completas dos quatro mundos.
-4. Adicionar efeitos sonoros e música com controles para a família.
-5. Aprimorar a experiência em celulares e tablets.
-6. Realizar testes de qualidade e acessibilidade antes da disponibilização pública.
-
-As novidades serão apresentadas conforme cada etapa estiver concluída e validada.
+Abrir o jogo com `?qa=1` expõe `window.__lda` para automação; `node scripts/qa-smoke.cjs`
+percorre as telas com Playwright, joga uma fase com um bot e verifica o áudio.
 
 ## 🏢 Uma criação da VSA Soluções em Tecnologia
 
-**Little Dash Adventure é um software de propriedade da VSA Soluções em Tecnologia**, idealizado e desenvolvido pela VSA como parte de seu portfólio de soluções digitais. A identidade, a experiência e os elementos originais do projeto fazem parte dessa iniciativa.
+Little Dash Adventure é um software de propriedade da VSA Soluções em Tecnologia. As trilhas
+sonoras foram produzidas para este projeto e estão versionadas em `public/assets/music/`.
 
----
-
-## 🚀 Embarque nessa aventura
-
-Estamos construindo Little Dash Adventure com uma ideia simples: transformar alguns minutos de brincadeira em momentos de imaginação, alegria e descoberta.
-
-**Little Dash Adventure — cada toque é o começo de uma nova história.**
-
----
-
-<div align="center">
-
-**LITTLE DASH ADVENTURE**
-
-**Uma solução VSA Soluções em Tecnologia**  
-<sub>Software de propriedade da VSA Soluções em Tecnologia • Todos os direitos reservados.</sub>
-
-<br />
-
-<sub>Feito com carinho para pequenos grandes exploradores. 💛</sub>
-
-<br />
-
-<sub>Projeto em desenvolvimento • Acompanhe as próximas etapas nesta página.</sub>
-
-</div>
+<div align="center"><sub>Feito com carinho para pequenos grandes exploradores. 💛</sub></div>
