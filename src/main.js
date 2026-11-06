@@ -3,12 +3,14 @@ import { CHARACTERS, WORLDS } from "./config.js";
 import { LEVELS, getLevel } from "./game/level-data.js";
 import { GameEngine } from "./game/engine.js";
 import { loadProgress, saveProgress } from "./services/storage.js";
+import { GameAudio } from "./services/audio.js";
 
 const screen = document.querySelector("#screen");
 const soundToggle = document.querySelector("#sound-toggle");
 let progress = loadProgress();
 let engine = null;
 let activeLevel = null;
+const gameAudio = new GameAudio(progress.soundEnabled);
 
 const button = (label, action, extra = "") => `<button class="primary-button ${extra}" data-action="${action}">${label}</button>`;
 
@@ -104,12 +106,12 @@ screen.addEventListener("click", (event) => {
     return renderCharacters();
   }
   const action = target.dataset.action;
-  if (action === "home") { engine?.destroy(); engine = null; renderHome(); }
-  if (action === "worlds") { engine?.destroy(); engine = null; renderWorlds(); }
+  if (action === "home") { engine?.destroy(); engine = null; gameAudio.stop(); renderHome(); }
+  if (action === "worlds") { engine?.destroy(); engine = null; gameAudio.stop(); renderWorlds(); }
   if (action === "characters") renderCharacters();
   if (action === "jump") engine?.jump();
   if (action === "pause") pauseGame();
-  if (action === "resume") { screen.querySelector(".pause-overlay")?.remove(); engine?.resume(); }
+  if (action === "resume") { screen.querySelector(".pause-overlay")?.remove(); engine?.resume(); gameAudio.play(); }
   if (action === "replay") startGame(activeLevel.id);
 });
 
