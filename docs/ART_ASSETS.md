@@ -1,6 +1,6 @@
 # Catálogo de arte — Little Dash Adventure
 
-> Estado: **assets gerados e baixados para ambiente de processamento; integração binária no Git ainda pendente**. Este documento registra as entregas do pipeline visual e os critérios obrigatórios antes de ativá-las no jogo.
+> Estado: **quatro fundos WebP versionados e integrados ao renderizador Canvas e ao cache offline do PWA**. A trilha e o atlas de personagens continuam fora do runtime. Este documento registra as entregas do pipeline visual e os critérios obrigatórios antes de ativá-las no jogo.
 
 ## Identidade visual
 
@@ -36,18 +36,18 @@ Arquivo de origem: [MP3 gerado](https://d8j0ntlcm91z4.cloudfront.net/user_3JEBvI
 
 ## Critérios de integração
 
-1. Versionar os arquivos finais localmente em `public/assets/`; não depender do CDN de geração em produção.
+1. Fundos finais versionados em `public/assets/worlds/`; o runtime usa caminhos locais e não depende do CDN de geração.
 2. As imagens de cenário foram solicitadas em widescreen, mas a configuração efetiva foi 1:1. **Não esticar**: adaptar com crop/panning ou composição em camadas.
 3. O atlas de personagens está em RGB e não possui transparência confirmada. Não usar como spritesheet. Separar personagens e poses, validar limites e alpha antes da integração.
-4. Atualizar o cache versionado do service worker somente depois que os binários estiverem no repositório.
+4. O service worker usa cache `little-dash-adventure-v2` e pré-carrega os quatro fundos locais.
 5. Registrar dimensões finais, tamanho em bytes, licença/origem e checksum no inventário técnico.
 6. Testar desempenho, legibilidade e comportamento offline em dispositivos móveis reais.
 
 ## Pendências
 
 - Arte de interface (botões, pausa, som, configurações parentais, medalhas e partículas): resultado do Canva ainda não foi validado.
-- Quatro fundos e trilha foram otimizados em ambiente de processamento, mas ainda não estão versionados no Git nem conectados ao runtime.
-- Testes visuais, de áudio e de PWA em dispositivos reais.
+- A trilha foi gerada e otimizada, mas ainda não foi versionada nem conectada ao runtime. O atlas de personagens aguarda separação e validação de transparência.
+- Testes de build, renderização visual, áudio e PWA em dispositivos móveis reais ainda pendentes.
 
 ## Privacidade infantil
 
