@@ -1,5 +1,11 @@
-const CACHE = "little-dash-adventure-v1";
-const CORE = ["/", "/index.html", "/manifest.webmanifest", "/assets/icon.svg"];
+const CACHE = "little-dash-adventure-v2";
+const CORE = [
+  "/", "/index.html", "/manifest.webmanifest", "/assets/icon.svg",
+  "/assets/worlds/candy-kingdom.webp",
+  "/assets/worlds/dinosaur-island.webp",
+  "/assets/worlds/underwater.webp",
+  "/assets/worlds/space-adventure.webp"
+];
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(CORE)));
   self.skipWaiting();
