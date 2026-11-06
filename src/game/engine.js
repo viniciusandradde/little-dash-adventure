@@ -3,6 +3,73 @@ import { GAME_CONFIG, WORLDS } from "../config.js";
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const backgroundImages = new Map();
 
+function roundedRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, r);
+  ctx.fill();
+}
+
+function drawMascot(ctx, character, x, y, size, elapsed, airborne) {
+  const id = character?.id ?? "cubinho";
+  const bob = airborne ? 0 : Math.sin(elapsed * 13) * 2.2;
+  const stride = airborne ? 0 : Math.sin(elapsed * 17) * 4;
+  ctx.save();
+  ctx.translate(x, y + bob);
+  ctx.rotate(airborne ? -0.12 : Math.sin(elapsed * 8) * 0.025);
+  ctx.scale(size / 48, size / 48);
+  ctx.fillStyle = "rgba(45,35,90,.18)";
+  ctx.beginPath(); ctx.ellipse(0, 25, 18, 5, 0, 0, Math.PI * 2); ctx.fill();
+
+  if (id === "estrelinha") {
+    ctx.fillStyle = "#ffd45e";
+    ctx.strokeStyle = "#f0a92c"; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const a = -Math.PI / 2 + i * Math.PI / 5;
+      const r = i % 2 ? 12 : 23;
+      const px = Math.cos(a) * r, py = Math.sin(a) * r;
+      i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+  } else if (id === "foguetinho") {
+    ctx.fillStyle = "#ff8e85";
+    ctx.beginPath(); ctx.moveTo(0,-25); ctx.quadraticCurveTo(20,-12,15,13); ctx.lineTo(-15,13); ctx.quadraticCurveTo(-20,-12,0,-25); ctx.fill();
+    ctx.fillStyle = "#ffcf68";
+    ctx.beginPath(); ctx.moveTo(-8,10); ctx.lineTo(-21,22); ctx.lineTo(-13,0); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(8,10); ctx.lineTo(21,22); ctx.lineTo(13,0); ctx.fill();
+    ctx.fillStyle = "#bcecff"; ctx.beginPath(); ctx.arc(0,-5,7,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = airborne ? "#ffcf68" : "#ffb65e";
+    ctx.beginPath(); ctx.moveTo(-6,15); ctx.lineTo(0,28 + Math.sin(elapsed*22)*3); ctx.lineTo(6,15); ctx.fill();
+  } else {
+    ctx.fillStyle = id === "dino" ? "#65c978" : "#54b7ff";
+    if (id === "dino") {
+      ctx.beginPath(); ctx.moveTo(-17,18); ctx.lineTo(-20,-9); ctx.lineTo(-10,-4); ctx.lineTo(-4,-19); ctx.lineTo(3,-5); ctx.lineTo(12,-14); ctx.lineTo(18,18); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#a6ed9d"; roundedRect(ctx,-13,-5,26,27,9);
+    } else {
+      roundedRect(ctx,-19,-19,38,38,10);
+    }
+    ctx.fillStyle = "#fff";
+    ctx.beginPath(); ctx.arc(-7,-4,5,0,Math.PI*2); ctx.arc(7,-4,5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = "#493b80";
+    ctx.beginPath(); ctx.arc(-6,-3,2.2,0,Math.PI*2); ctx.arc(8,-3,2.2,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = "#493b80"; ctx.lineWidth = 2; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.arc(0,4,5,0.15,Math.PI-0.15); ctx.stroke();
+    if (id === "dino") {
+      ctx.fillStyle = "#4ba95d";
+      ctx.beginPath(); ctx.moveTo(-15,18); ctx.lineTo(-13,25); ctx.lineTo(-5,18); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(15,18); ctx.lineTo(13,25); ctx.lineTo(5,18); ctx.fill();
+    }
+  }
+
+  if (id !== "estrelinha" && id !== "foguetinho") {
+    ctx.fillStyle = "#493b80";
+    roundedRect(ctx,-13,15 + stride,10,8,4);
+    roundedRect(ctx,4,15 - stride,10,8,4);
+  }
+  ctx.restore();
+}
+
+
 function getBackground(src) {
   if (!src) return null;
   if (!backgroundImages.has(src)) {
@@ -143,8 +210,7 @@ export class GameEngine {
       ctx.fillStyle = "#f7a46c"; ctx.beginPath(); ctx.arc(x, this.groundY - 12, 15, Math.PI, 0); ctx.fill();
     }
     const size = GAME_CONFIG.playerSize;
-    ctx.font = `${size}px system-ui, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText(this.character?.emoji ?? "🟦", w * 0.22, this.playerY + size / 2);
+    drawMascot(ctx, this.character, w * 0.22, this.playerY + size / 2, size, this.elapsed, this.playerY < this.groundY - size - 2);
     ctx.fillStyle = "#4c3a91"; ctx.font = "bold 16px system-ui"; ctx.textAlign = "left";
     ctx.fillText(this.level?.name ?? "Aventura", 18, 28);
     ctx.fillStyle = "rgba(76,58,145,.18)"; ctx.fillRect(18, 42, w - 36, 9);
