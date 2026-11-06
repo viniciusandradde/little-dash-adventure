@@ -105,6 +105,8 @@ export class GameEngine {
     this.velocityY = 0;
     this.stars = 0;
     this.collectedStars = new Set();
+    this.passedObstacles = new Set();
+    this.stumbleUntil = 0;
     this.jumpQueued = false;
     this.paused = false;
     this.level = null;
@@ -134,6 +136,8 @@ export class GameEngine {
     this.distance = 0;
     this.stars = 0;
     this.collectedStars = new Set();
+    this.passedObstacles = new Set();
+    this.stumbleUntil = 0;
     this.velocityY = 0;
     this.playerY = this.groundY - GAME_CONFIG.playerSize;
     this.running = true;
@@ -153,6 +157,7 @@ export class GameEngine {
   jump() {
     if (!this.running || this.paused) return;
     this.jumpQueued = true;
+    this.callbacks.onJump?.();
   }
 
   loop(time) {
@@ -166,6 +171,7 @@ export class GameEngine {
 
   update(dt) {
     this.elapsed += dt;
+    const previousDistance = this.distance;
     this.distance += GAME_CONFIG.baseSpeed * dt;
     const floor = this.groundY - GAME_CONFIG.playerSize;
     if (this.jumpQueued && this.playerY >= floor - 1) this.velocityY = GAME_CONFIG.jumpVelocity;
@@ -174,14 +180,22 @@ export class GameEngine {
     this.playerY += this.velocityY * dt;
     if (this.playerY >= floor) { this.playerY = floor; this.velocityY = 0; }
 
-    // Obstacles are visual landmarks only: the helper jump avoids frustration.
+    // The child must jump manually. Missing an obstacle causes only a playful
+    // stumble: the adventure continues and no stars or progress are removed.
     const obstacleEvery = 520;
     const firstObstacle = 430;
     const obstacleIndex = Math.max(0, Math.floor((this.distance - firstObstacle) / obstacleEvery));
-    const nextObstacle = firstObstacle + obstacleIndex * obstacleEvery;
-    const obstaclePhase = nextObstacle - this.distance;
-    if (obstaclePhase <= GAME_CONFIG.assistDistance && obstaclePhase > GAME_CONFIG.assistDistance - GAME_CONFIG.baseSpeed * dt && this.playerY >= floor - 1) {
-      this.velocityY = GAME_CONFIG.jumpVelocity * 0.82;
+    for (let i = Math.max(0, obstacleIndex - 1); i <= obstacleIndex + 1; i++) {
+      const obstacleDistance = firstObstacle + i * obstacleEvery;
+      if (this.passedObstacles.has(i)) continue;
+      if (previousDistance < obstacleDistance && this.distance >= obstacleDistance) {
+        this.passedObstacles.add(i);
+        const jumpedOver = this.playerY < floor - 12;
+        if (!jumpedOver) {
+          this.stumbleUntil = this.elapsed + 0.42;
+          this.callbacks.onStumble?.();
+        }
+      }
     }
 
     // Stars are placed in the jump arc and collected on contact, with a generous
@@ -280,6 +294,12 @@ export class GameEngine {
       ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
     }
 
+    if (this.elapsed < this.stumbleUntil) {
+      ctx.save(); ctx.globalAlpha = 0.82; ctx.fillStyle = "#493b80";
+      ctx.font = "bold 14px system-ui"; ctx.textAlign = "center";
+      ctx.fillText("Ops! Vamos tentar pular?", playerX + 28, this.groundY - 62);
+      ctx.restore();
+    }
     drawMascot(ctx, this.character, playerX, this.playerY + size / 2, size, this.elapsed, this.playerY < this.groundY - size - 2);
     ctx.fillStyle = "#4c3a91"; ctx.font = "bold 16px system-ui"; ctx.textAlign = "left";
     ctx.fillText(this.level?.name ?? "Aventura", 18, 28);
