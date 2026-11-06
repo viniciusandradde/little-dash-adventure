@@ -1,3 +1,5 @@
+const BASE_URL = import.meta.env?.BASE_URL ?? "/";
+
 export const GAME_CONFIG = Object.freeze({
   version: 1,
   durationSeconds: 42,
@@ -17,8 +19,8 @@ export const CHARACTERS = [
 ];
 
 export const WORLDS = [
-  { id: "candy", name: "Reino dos Doces", emoji: "🍭", color: "#ff9ecb", background: `${import.meta.env.BASE_URL}assets/worlds/candy-kingdom.webp`, levels: ["Nuvens de Algodão", "Ponte de Chocolate", "Castelo de Pirulitos"] },
-  { id: "dino", name: "Ilha dos Dinossauros", emoji: "🦕", color: "#8edc9b", background: `${import.meta.env.BASE_URL}assets/worlds/dinosaur-island.webp`, levels: ["Vale dos Ovinhos", "Floresta Amiga", "Vulcão de Sorvete"] },
-  { id: "ocean", name: "Fundo do Mar", emoji: "🐠", color: "#75d5ed", background: `${import.meta.env.BASE_URL}assets/worlds/underwater.webp`, levels: ["Bolhas Mágicas", "Jardim de Coral", "Tesouro da Tartaruga"] },
-  { id: "space", name: "Aventura Espacial", emoji: "🚀", color: "#a99aff", background: `${import.meta.env.BASE_URL}assets/worlds/space-adventure.webp`, levels: ["Lua de Queijo", "Anéis de Saturno", "Estação das Estrelas"] }
+  { id: "candy", name: "Reino dos Doces", emoji: "🍭", color: "#ff9ecb", background: `${BASE_URL}assets/worlds/candy-kingdom.webp`, levels: ["Nuvens de Algodão", "Ponte de Chocolate", "Castelo de Pirulitos"] },
+  { id: "dino", name: "Ilha dos Dinossauros", emoji: "🦕", color: "#8edc9b", background: `${BASE_URL}assets/worlds/dinosaur-island.webp`, levels: ["Vale dos Ovinhos", "Floresta Amiga", "Vulcão de Sorvete"] },
+  { id: "ocean", name: "Fundo do Mar", emoji: "🐠", color: "#75d5ed", background: `${BASE_URL}assets/worlds/underwater.webp`, levels: ["Bolhas Mágicas", "Jardim de Coral", "Tesouro da Tartaruga"] },
+  { id: "space", name: "Aventura Espacial", emoji: "🚀", color: "#a99aff", background: `${BASE_URL}assets/worlds/space-adventure.webp`, levels: ["Lua de Queijo", "Anéis de Saturno", "Estação das Estrelas"] }
 ];
