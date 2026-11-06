@@ -30,7 +30,7 @@ function renderHome() {
 
 function renderWorlds() {
   screen.innerHTML = `<div class="selection-panel"><h1>Escolha um mundo 🌈</h1><div class="world-grid">${WORLDS.map((world) => `
-    <button class="world-card" data-world="${world.id}" style="--world:${world.color}">
+    <button class="world-card" data-world="${world.id}" style="--world:${world.color};--world-image:url(${world.background})">
       <span class="world-emoji">${world.emoji}</span><strong>${world.name}</strong><small>3 aventuras</small>
     </button>`).join("")}</div><button class="soft-button" data-action="home">← Início</button></div>`;
 }
