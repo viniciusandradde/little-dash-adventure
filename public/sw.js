@@ -1,4 +1,4 @@
-const CACHE = "little-dash-adventure-v2";
+const CACHE = "little-dash-adventure-v3";
 const CORE = [
   "/", "/index.html", "/manifest.webmanifest", "/assets/icon.svg",
   "/assets/worlds/candy-kingdom.webp",
