@@ -104,6 +104,7 @@ export class GameEngine {
     this.playerY = 0;
     this.velocityY = 0;
     this.stars = 0;
+    this.collectedStars = new Set();
     this.jumpQueued = false;
     this.paused = false;
     this.level = null;
@@ -132,6 +133,7 @@ export class GameEngine {
     this.elapsed = 0;
     this.distance = 0;
     this.stars = 0;
+    this.collectedStars = new Set();
     this.velocityY = 0;
     this.playerY = this.groundY - GAME_CONFIG.playerSize;
     this.running = true;
@@ -172,14 +174,32 @@ export class GameEngine {
     this.playerY += this.velocityY * dt;
     if (this.playerY >= floor) { this.playerY = floor; this.velocityY = 0; }
 
-    const obstacleEvery = 330;
-    const phase = this.distance % obstacleEvery;
-    if (phase > obstacleEvery - GAME_CONFIG.assistDistance && phase < obstacleEvery - GAME_CONFIG.assistDistance + 8 && this.playerY >= floor - 1) this.velocityY = GAME_CONFIG.jumpVelocity * 0.72;
+    // Obstacles are visual landmarks only: the helper jump avoids frustration.
+    const obstacleEvery = 520;
+    const firstObstacle = 430;
+    const obstacleIndex = Math.max(0, Math.floor((this.distance - firstObstacle) / obstacleEvery));
+    const nextObstacle = firstObstacle + obstacleIndex * obstacleEvery;
+    const obstaclePhase = nextObstacle - this.distance;
+    if (obstaclePhase <= GAME_CONFIG.assistDistance && obstaclePhase > GAME_CONFIG.assistDistance - GAME_CONFIG.baseSpeed * dt && this.playerY >= floor - 1) {
+      this.velocityY = GAME_CONFIG.jumpVelocity * 0.82;
+    }
 
-    const starEvery = 245;
-    if (Math.floor((this.distance + GAME_CONFIG.baseSpeed * dt) / starEvery) > Math.floor(this.distance / starEvery)) {
-      this.stars += 1;
-      this.callbacks.onStar?.(this.stars);
+    // Stars are placed in the jump arc and collected on contact, with a generous
+    // pickup radius so small screens and young players are not penalized.
+    const starEvery = 520;
+    const firstStar = 285;
+    const starIndex = Math.max(0, Math.floor((this.distance - firstStar) / starEvery));
+    for (let i = Math.max(0, starIndex - 1); i <= starIndex + 1; i++) {
+      const starDistance = firstStar + i * starEvery;
+      if (this.collectedStars.has(i)) continue;
+      const horizontalGap = Math.abs(starDistance - this.distance);
+      const starY = this.groundY - 105;
+      const playerCenterY = this.playerY + GAME_CONFIG.playerSize / 2;
+      if (horizontalGap < 48 && Math.abs(playerCenterY - starY) < 78) {
+        this.collectedStars.add(i);
+        this.stars += 1;
+        this.callbacks.onStar?.(this.stars);
+      }
     }
     if (this.elapsed >= (this.level?.duration ?? GAME_CONFIG.durationSeconds)) {
       this.stop();
@@ -219,7 +239,48 @@ export class GameEngine {
       ctx.fillStyle = "#f7a46c"; ctx.beginPath(); ctx.arc(x, this.groundY - 12, 15, Math.PI, 0); ctx.fill();
     }
     const size = GAME_CONFIG.playerSize;
-    drawMascot(ctx, this.character, w * 0.22, this.playerY + size / 2, size, this.elapsed, this.playerY < this.groundY - size - 2);
+    const playerX = w * 0.22;
+    const obstacleEvery = 520;
+    const firstObstacle = 430;
+    const firstVisible = Math.max(0, Math.floor((this.distance - firstObstacle - 180) / obstacleEvery));
+    for (let i = firstVisible; i < firstVisible + 3; i++) {
+      const obstacleDistance = firstObstacle + i * obstacleEvery;
+      const x = playerX + obstacleDistance - this.distance;
+      if (x < -55 || x > w + 55) continue;
+      const baseY = this.groundY;
+      ctx.save();
+      if (world.id === "dino") {
+        ctx.fillStyle = "#8a9b78"; ctx.beginPath(); ctx.ellipse(x, baseY - 17, 25, 18, -0.12, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#b8c99b"; ctx.beginPath(); ctx.arc(x - 7, baseY - 24, 6, 0, Math.PI * 2); ctx.fill();
+      } else if (world.id === "ocean") {
+        ctx.fillStyle = "#ff9b85"; ctx.beginPath(); ctx.arc(x, baseY - 16, 22, Math.PI, 0); ctx.lineTo(x + 22, baseY); ctx.lineTo(x - 22, baseY); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = "#ffd4a3"; ctx.beginPath(); ctx.arc(x - 8, baseY - 17, 4, 0, Math.PI * 2); ctx.arc(x + 8, baseY - 17, 4, 0, Math.PI * 2); ctx.fill();
+      } else if (world.id === "space") {
+        ctx.fillStyle = "#9a91b8"; ctx.beginPath(); ctx.arc(x, baseY - 17, 23, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "rgba(255,255,255,.35)"; ctx.beginPath(); ctx.arc(x - 8, baseY - 25, 6, 0, Math.PI * 2); ctx.fill();
+      } else {
+        ctx.fillStyle = "#c77b9e"; roundedRect(ctx, x - 20, baseY - 35, 40, 35, 12);
+        ctx.fillStyle = "#ffe08a"; ctx.beginPath(); ctx.arc(x, baseY - 35, 12, Math.PI, 0); ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    const starEvery = 520;
+    const firstStar = 285;
+    const firstStarVisible = Math.max(0, Math.floor((this.distance - firstStar - 100) / starEvery));
+    for (let i = firstStarVisible; i < firstStarVisible + 3; i++) {
+      if (this.collectedStars.has(i)) continue;
+      const x = playerX + firstStar + i * starEvery - this.distance;
+      if (x < -30 || x > w + 30) continue;
+      const y = this.groundY - 105 + Math.sin(this.elapsed * 4 + i) * 5;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(this.elapsed * 1.4);
+      ctx.fillStyle = "#ffd45e"; ctx.strokeStyle = "#fff5bd"; ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5; const r = k % 2 ? 7 : 16; const px = Math.cos(a) * r, py = Math.sin(a) * r; k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+      ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
+    }
+
+    drawMascot(ctx, this.character, playerX, this.playerY + size / 2, size, this.elapsed, this.playerY < this.groundY - size - 2);
     ctx.fillStyle = "#4c3a91"; ctx.font = "bold 16px system-ui"; ctx.textAlign = "left";
     ctx.fillText(this.level?.name ?? "Aventura", 18, 28);
     ctx.fillStyle = "rgba(76,58,145,.18)"; ctx.fillRect(18, 42, w - 36, 9);
