@@ -1,67 +1,141 @@
-# Little Dash Adventure
+<div align="center">
 
-Um jogo de plataforma infantil, mobile-first, inspirado no gênero endless runner/plataforma rítmica. Desenvolvido para crianças pequenas, com controles simples, assistência automática e progresso sem punições.
+# 🍭 LITTLE DASH ADVENTURE
 
-> **Status:** fundação do projeto + MVP jogável em construção. A arquitetura e os requisitos estão documentados; esta primeira versão é um ponto de partida técnico, não uma declaração de que todos os 12 níveis já estão finalizados.
+### Pequenas aventuras. Grandes descobertas. Diversão sem limites.
 
-## Executar localmente
+**Um mundo mágico criado para crianças explorarem, brincarem e descobrirem no seu próprio ritmo.**
 
-Requer Node.js 20+.
+<br />
 
-```bash
-npm install
-npm run dev
-```
+[🎮 Conheça a aventura](#-uma-aventura-feita-para-crianças) · [🌈 Explore os mundos](#-quatro-mundos-para-descobrir) · [💛 Nosso compromisso](#-diversão-com-tranquilidade-para-a-família)
 
-Abra o endereço informado pelo Vite. Para validar a build:
+<br />
 
-```bash
-npm test
-npm run build
-npm run preview
-```
+<img src="public/assets/worlds/candy-kingdom.webp" alt="Reino dos Doces — Little Dash Adventure" width="48%" />
+<img src="public/assets/worlds/dinosaur-island.webp" alt="Ilha dos Dinossauros — Little Dash Adventure" width="48%" />
 
-Também é possível servir a pasta de build em qualquer hospedagem estática HTTPS. O service worker habilita cache offline após a primeira visita.
+<br />
 
-## Conceito
+<img src="public/assets/worlds/underwater.webp" alt="Fundo do Mar — Little Dash Adventure" width="48%" />
+<img src="public/assets/worlds/space-adventure.webp" alt="Aventura Espacial — Little Dash Adventure" width="48%" />
 
-- Criança controla o personagem com um toque para pular.
-- Movimento automático em velocidade confortável.
-- Sem vidas, Game Over, punição ou perda de progresso.
-- Obstáculos são desafios visuais amigáveis: o personagem não morre.
-- Assistência automática configurável e recuperação suave.
-- Quatro mundos, quatro personagens e 12 fases planejadas.
-- Interface visual simples, alvos grandes e orientação paisagem.
-- Sem anúncios, compras, login, rastreamento ou backend.
+<br />
 
-## Mundos
+<sub>UM UNIVERSO DE IMAGINAÇÃO • CARINHO • DESCOBERTAS</sub>
 
-1. Reino dos Doces — pirulitos, chocolates e nuvens.
-2. Ilha dos Dinossauros — dinossauros amigáveis, ovos e plantas.
-3. Fundo do Mar — peixes, bolhas, tartarugas e tesouros.
-4. Aventura Espacial — planetas, foguetes e astronautas.
+</div>
 
-Cada mundo terá três fases. Todos os mundos e personagens ficam disponíveis desde o início.
+---
 
-## Personagens
+## ✨ Uma aventura feita para crianças
 
-Cubinho, Dino, Estrelinha e Foguetinho.
+Little Dash Adventure é uma experiência de jogo acolhedora, colorida e intuitiva, pensada especialmente para crianças pequenas. Cada toque abre caminho para uma nova descoberta: pular, explorar cenários encantadores, encontrar estrelas e avançar por aventuras cheias de imaginação.
 
-## Engenharia
+Aqui, o mais importante não é vencer ou competir. É experimentar, descobrir e se divertir.
 
-Veja:
-- [PRD](docs/PRD.md)
-- [Arquitetura](docs/ARCHITECTURE.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Plano de QA](docs/QA.md)
-- [Catálogo de arte e checklist de integração](docs/ART_ASSETS.md)
-- [Contribuição](CONTRIBUTING.md)
-- [Avisos de terceiros](THIRD_PARTY_NOTICES.md)
+**Simples de jogar:** um toque faz o personagem pular e seguir sua jornada.
 
-## Princípios de segurança infantil
+**Feito para incentivar a exploração:** mundos diferentes, personagens carismáticos e pequenas surpresas pelo caminho.
 
-O jogo não solicita dados pessoais, não oferece chat, links externos, anúncios ou compras. O progresso é salvo somente no dispositivo. Áudio pode ser desligado. A experiência deve continuar até a conclusão mesmo sem interação.
+**No ritmo da criança:** uma experiência amigável, com assistência para tornar a brincadeira mais acessível.
 
-## Licença
+## 🌈 Quatro mundos para descobrir
 
-MIT. Consulte [LICENSE](LICENSE).
+<details>
+<summary><strong>🍭 Reino dos Doces</strong> — Um passeio delicioso por um mundo colorido</summary>
+
+Nuvens fofinhas, pirulitos gigantes, chocolates e castelos que parecem saídos de um sonho.
+
+</details>
+
+<details>
+<summary><strong>🦕 Ilha dos Dinossauros</strong> — Uma expedição entre amigos pré-históricos</summary>
+
+Dinossauros simpáticos, ovos misteriosos, vegetação exuberante e cenários cheios de vida.
+
+</details>
+
+<details>
+<summary><strong>🐠 Fundo do Mar</strong> — Descobertas nas profundezas encantadas</summary>
+
+Peixes curiosos, bolhas brilhantes, corais coloridos, tartarugas e tesouros escondidos.
+
+</details>
+
+<details>
+<summary><strong>🚀 Aventura Espacial</strong> — Uma viagem pelo universo da imaginação</summary>
+
+Planetas, estrelas, foguetes e paisagens espaciais para despertar a curiosidade.
+
+</details>
+
+## 🧸 Amigos para acompanhar cada descoberta
+
+Quatro personagens especiais estão prontos para embarcar nessa jornada:
+
+| Personagem | Personalidade |
+|---|---|
+| 🟦 **Cubinho** | Curioso, corajoso e sempre pronto para começar |
+| 🦖 **Dino** | Um explorador divertido que adora novas descobertas |
+| ⭐ **Estrelinha** | Brilhante, alegre e cheia de energia |
+| 🚀 **Foguetinho** | Aventureiro, sonhador e apaixonado pelo espaço |
+
+## 💛 Diversão com tranquilidade para a família
+
+A experiência foi idealizada com a infância e a tranquilidade dos responsáveis em mente.
+
+- **Sem anúncios:** a brincadeira não é interrompida por publicidade.
+- **Sem compras dentro do jogo:** não há ofertas ou compras direcionadas à criança.
+- **Sem chat ou interação com desconhecidos:** a aventura é individual e protegida.
+- **Sem cadastro infantil:** a proposta não exige criação de conta pela criança.
+- **Sem competição punitiva:** não há vidas a perder nem castigos por tentar novamente.
+- **Som opcional:** a família pode escolher brincar com ou sem áudio.
+- **Progresso no próprio dispositivo:** a jornada pode continuar de onde parou.
+
+O compromisso é oferecer um ambiente de diversão simples, respeitoso e apropriado para a proposta infantil.
+
+## 🎁 O que torna essa aventura especial?
+
+- Uma experiência visual alegre e acolhedora.
+- Controles simples, pensados para pequenas mãos.
+- Personagens que convidam à identificação e à imaginação.
+- Quatro universos temáticos para explorar.
+- Fases curtas e objetivos fáceis de compreender.
+- Incentivo à curiosidade, à coordenação e à descoberta.
+- Uma experiência sem pressão por desempenho.
+
+## 🗺️ Uma jornada em construção
+
+Little Dash Adventure está em desenvolvimento. A experiência está sendo construída por etapas, com atenção especial à qualidade da brincadeira, à segurança infantil e à experiência das famílias.
+
+**Próximas novidades da aventura:**
+
+1. Dar vida aos personagens com animações especiais.
+2. Criar desafios, estrelas e interações em cada cenário.
+3. Desenvolver as jornadas completas dos quatro mundos.
+4. Adicionar efeitos sonoros e música com controles para a família.
+5. Aprimorar a experiência em celulares e tablets.
+6. Realizar testes de qualidade e acessibilidade antes da disponibilização pública.
+
+As novidades serão apresentadas conforme cada etapa estiver concluída e validada.
+
+## 🚀 Embarque nessa aventura
+
+Estamos construindo Little Dash Adventure com uma ideia simples: transformar alguns minutos de brincadeira em momentos de imaginação, alegria e descoberta.
+
+**Little Dash Adventure — cada toque é o começo de uma nova história.**
+
+---
+
+<div align="center">
+
+**LITTLE DASH ADVENTURE**
+
+<sub>Feito com carinho para pequenos grandes exploradores. 💛</sub>
+
+<br />
+
+<sub>Projeto em desenvolvimento • Acompanhe as próximas etapas nesta página.</sub>
+
+</div>
