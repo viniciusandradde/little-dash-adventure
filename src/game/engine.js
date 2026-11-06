@@ -182,8 +182,8 @@ export class GameEngine {
 
     // The child must jump manually. Missing an obstacle causes only a playful
     // stumble: the adventure continues and no stars or progress are removed.
-    const obstacleEvery = 520;
-    const firstObstacle = 430;
+    const obstacleEvery = this.level?.obstacleSpacing ?? 520;
+    const firstObstacle = this.level?.firstObstacle ?? 430;
     const obstacleIndex = Math.max(0, Math.floor((this.distance - firstObstacle) / obstacleEvery));
     for (let i = Math.max(0, obstacleIndex - 1); i <= obstacleIndex + 1; i++) {
       const obstacleDistance = firstObstacle + i * obstacleEvery;
@@ -200,8 +200,8 @@ export class GameEngine {
 
     // Stars are placed in the jump arc and collected on contact, with a generous
     // pickup radius so small screens and young players are not penalized.
-    const starEvery = 520;
-    const firstStar = 285;
+    const starEvery = obstacleEvery;
+    const firstStar = firstObstacle - (this.level?.starLead ?? 145);
     const starIndex = Math.max(0, Math.floor((this.distance - firstStar) / starEvery));
     for (let i = Math.max(0, starIndex - 1); i <= starIndex + 1; i++) {
       const starDistance = firstStar + i * starEvery;
@@ -254,14 +254,25 @@ export class GameEngine {
     }
     const size = GAME_CONFIG.playerSize;
     const playerX = w * 0.22;
-    const obstacleEvery = 520;
-    const firstObstacle = 430;
+    const obstacleEvery = this.level?.obstacleSpacing ?? 520;
+    const firstObstacle = this.level?.firstObstacle ?? 430;
     const firstVisible = Math.max(0, Math.floor((this.distance - firstObstacle - 180) / obstacleEvery));
     for (let i = firstVisible; i < firstVisible + 3; i++) {
       const obstacleDistance = firstObstacle + i * obstacleEvery;
       const x = playerX + obstacleDistance - this.distance;
       if (x < -55 || x > w + 55) continue;
       const baseY = this.groundY;
+      const cueDistance = this.level?.cueDistance ?? 220;
+      const distanceToObstacle = obstacleDistance - this.distance;
+      if (distanceToObstacle > 0 && distanceToObstacle <= cueDistance) {
+        ctx.save();
+        ctx.globalAlpha = 0.45 + 0.35 * Math.sin(this.elapsed * 7);
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(x, baseY - 62, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
       ctx.save();
       if (world.id === "dino") {
         ctx.fillStyle = "#8a9b78"; ctx.beginPath(); ctx.ellipse(x, baseY - 17, 25, 18, -0.12, 0, Math.PI * 2); ctx.fill();
@@ -279,8 +290,8 @@ export class GameEngine {
       ctx.restore();
     }
 
-    const starEvery = 520;
-    const firstStar = 285;
+    const starEvery = this.level?.obstacleSpacing ?? 520;
+    const firstStar = (this.level?.firstObstacle ?? 430) - (this.level?.starLead ?? 145);
     const firstStarVisible = Math.max(0, Math.floor((this.distance - firstStar - 100) / starEvery));
     for (let i = firstStarVisible; i < firstStarVisible + 3; i++) {
       if (this.collectedStars.has(i)) continue;
