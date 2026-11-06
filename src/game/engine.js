@@ -107,6 +107,9 @@ export class GameEngine {
     this.collectedStars = new Set();
     this.passedObstacles = new Set();
     this.stumbleUntil = 0;
+    this.feedbackUntil = 0;
+    this.feedbackMessage = "";
+    this.successfulJumps = 0;
     this.jumpQueued = false;
     this.paused = false;
     this.level = null;
@@ -138,6 +141,9 @@ export class GameEngine {
     this.collectedStars = new Set();
     this.passedObstacles = new Set();
     this.stumbleUntil = 0;
+    this.feedbackUntil = 0;
+    this.feedbackMessage = "";
+    this.successfulJumps = 0;
     this.velocityY = 0;
     this.playerY = this.groundY - GAME_CONFIG.playerSize;
     this.running = true;
@@ -192,8 +198,17 @@ export class GameEngine {
         this.passedObstacles.add(i);
         const jumpedOver = this.playerY < floor - 12;
         if (!jumpedOver) {
-          this.stumbleUntil = this.elapsed + 0.42;
+          this.successfulJumps = 0;
+          this.stumbleUntil = this.elapsed + 0.75;
+          this.feedbackMessage = "Tudo bem! Tente pular no próximo";
+          this.feedbackUntil = this.elapsed + 1.15;
           this.callbacks.onStumble?.();
+        } else {
+          this.successfulJumps += 1;
+          const streak = this.successfulJumps;
+          this.feedbackMessage = streak >= 3 ? `Incrível! ${streak} pulos certos!` : "Muito bem! Pulo perfeito!";
+          this.feedbackUntil = this.elapsed + 1.05;
+          this.callbacks.onJumpSuccess?.({ streak, total: this.successfulJumps });
         }
       }
     }
@@ -305,10 +320,14 @@ export class GameEngine {
       ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
     }
 
-    if (this.elapsed < this.stumbleUntil) {
-      ctx.save(); ctx.globalAlpha = 0.82; ctx.fillStyle = "#493b80";
-      ctx.font = "bold 14px system-ui"; ctx.textAlign = "center";
-      ctx.fillText("Ops! Vamos tentar pular?", playerX + 28, this.groundY - 62);
+    if (this.elapsed < this.feedbackUntil) {
+      const remaining = (this.feedbackUntil - this.elapsed) / 1.05;
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, remaining * 1.5);
+      ctx.fillStyle = this.elapsed < this.stumbleUntil ? "#493b80" : "#287a50";
+      ctx.font = "bold 14px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(this.feedbackMessage, playerX + 48, this.groundY - 66);
       ctx.restore();
     }
     drawMascot(ctx, this.character, playerX, this.playerY + size / 2, size, this.elapsed, this.playerY < this.groundY - size - 2);
