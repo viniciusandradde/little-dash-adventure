@@ -61,6 +61,15 @@ function drawMascot(ctx, character, x, y, size, elapsed, airborne) {
     }
   }
 
+  if (id === "estrelinha" || id === "foguetinho") {
+    ctx.fillStyle = "#fff";
+    ctx.beginPath(); ctx.arc(-6,-3,4,0,Math.PI*2); ctx.arc(6,-3,4,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = "#493b80";
+    ctx.beginPath(); ctx.arc(-5,-2,1.8,0,Math.PI*2); ctx.arc(7,-2,1.8,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = "#493b80"; ctx.lineWidth = 1.8; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.arc(0,4,4,0.15,Math.PI-0.15); ctx.stroke();
+  }
+
   if (id !== "estrelinha" && id !== "foguetinho") {
     ctx.fillStyle = "#493b80";
     roundedRect(ctx,-13,15 + stride,10,8,4);
