@@ -69,10 +69,13 @@ function startGame(levelId) {
   const character = CHARACTERS.find((item) => item.id === progress.selectedCharacter) ?? CHARACTERS[0];
   engine?.destroy();
   engine = new GameEngine(canvas, {
-    onStar: (count) => { const counter = screen.querySelector("#star-counter"); if (counter) counter.textContent = `⭐ ${count}`; },
-    onComplete: finishGame
+    onJump: () => gameAudio.jump(),
+    onStumble: () => gameAudio.tone(190, 0.16, "sine", 0.06),
+    onStar: (count) => { const counter = screen.querySelector("#star-counter"); if (counter) counter.textContent = `⭐ ${count}`; gameAudio.collect(); },
+    onComplete: (result) => { gameAudio.celebrate(); finishGame(result); }
   });
   engine.start(activeLevel, character);
+  gameAudio.play();
   canvas.addEventListener("pointerdown", () => engine?.jump());
 }
 
@@ -85,6 +88,7 @@ function finishGame(result) {
       <div class="hero-character">🎉</div><p class="eyebrow">MISSÃO CONCLUÍDA</p>
       <h1>Você conseguiu!</h1><p class="intro">Que aventura maravilhosa!</p>
       <div class="reward">⭐ ${result.stars} estrelinhas</div>
+      <p class="small-note">Total de estrelas: ${progress.stars} • Aventuras concluídas: ${progress.completedLevels.length}</p>
       ${button("JOGAR DE NOVO", "replay")}
       ${button("ESCOLHER OUTRO MUNDO", "worlds", "secondary-button")}
     </div>`;
@@ -119,6 +123,7 @@ soundToggle.addEventListener("click", () => {
   progress.soundEnabled = !progress.soundEnabled;
   soundToggle.textContent = progress.soundEnabled ? "🔊" : "🔇";
   saveProgress(progress);
+  gameAudio.setEnabled(progress.soundEnabled);
 });
 soundToggle.textContent = progress.soundEnabled ? "🔊" : "🔇";
 
