@@ -71,6 +71,9 @@ function startGame(levelId) {
   engine = new GameEngine(canvas, {
     onJump: () => gameAudio.jump(),
     onStumble: () => gameAudio.tone(190, 0.16, "sine", 0.06),
+    onJumpSuccess: ({ streak }) => {
+      gameAudio.tone(streak >= 3 ? 880 : 660, 0.12, "sine", 0.07);
+    },
     onStar: (count) => { const counter = screen.querySelector("#star-counter"); if (counter) counter.textContent = `⭐ ${count}`; gameAudio.collect(); },
     onComplete: (result) => { gameAudio.celebrate(); finishGame(result); }
   });
