@@ -17,8 +17,8 @@ export const CHARACTERS = [
 ];
 
 export const WORLDS = [
-  { id: "candy", name: "Reino dos Doces", emoji: "🍭", color: "#ff9ecb", levels: ["Nuvens de Algodão", "Ponte de Chocolate", "Castelo de Pirulitos"] },
-  { id: "dino", name: "Ilha dos Dinossauros", emoji: "🦕", color: "#8edc9b", levels: ["Vale dos Ovinhos", "Floresta Amiga", "Vulcão de Sorvete"] },
-  { id: "ocean", name: "Fundo do Mar", emoji: "🐠", color: "#75d5ed", levels: ["Bolhas Mágicas", "Jardim de Coral", "Tesouro da Tartaruga"] },
-  { id: "space", name: "Aventura Espacial", emoji: "🚀", color: "#a99aff", levels: ["Lua de Queijo", "Anéis de Saturno", "Estação das Estrelas"] }
+  { id: "candy", name: "Reino dos Doces", emoji: "🍭", color: "#ff9ecb", background: "/assets/worlds/candy-kingdom.webp", levels: ["Nuvens de Algodão", "Ponte de Chocolate", "Castelo de Pirulitos"] },
+  { id: "dino", name: "Ilha dos Dinossauros", emoji: "🦕", color: "#8edc9b", background: "/assets/worlds/dinosaur-island.webp", levels: ["Vale dos Ovinhos", "Floresta Amiga", "Vulcão de Sorvete"] },
+  { id: "ocean", name: "Fundo do Mar", emoji: "🐠", color: "#75d5ed", background: "/assets/worlds/underwater.webp", levels: ["Bolhas Mágicas", "Jardim de Coral", "Tesouro da Tartaruga"] },
+  { id: "space", name: "Aventura Espacial", emoji: "🚀", color: "#a99aff", background: "/assets/worlds/space-adventure.webp", levels: ["Lua de Queijo", "Anéis de Saturno", "Estação das Estrelas"] }
 ];

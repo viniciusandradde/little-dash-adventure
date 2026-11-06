@@ -3,12 +3,14 @@ import { CHARACTERS, WORLDS } from "./config.js";
 import { LEVELS, getLevel } from "./game/level-data.js";
 import { GameEngine } from "./game/engine.js";
 import { loadProgress, saveProgress } from "./services/storage.js";
+import { GameAudio } from "./services/audio.js";
 
 const screen = document.querySelector("#screen");
 const soundToggle = document.querySelector("#sound-toggle");
 let progress = loadProgress();
 let engine = null;
 let activeLevel = null;
+const gameAudio = new GameAudio(progress.soundEnabled);
 
 const button = (label, action, extra = "") => `<button class="primary-button ${extra}" data-action="${action}">${label}</button>`;
 
@@ -30,7 +32,7 @@ function renderHome() {
 
 function renderWorlds() {
   screen.innerHTML = `<div class="selection-panel"><h1>Escolha um mundo 🌈</h1><div class="world-grid">${WORLDS.map((world) => `
-    <button class="world-card" data-world="${world.id}" style="--world:${world.color}">
+    <button class="world-card" data-world="${world.id}" style="--world:${world.color};--world-image:url(${world.background})">
       <span class="world-emoji">${world.emoji}</span><strong>${world.name}</strong><small>3 aventuras</small>
     </button>`).join("")}</div><button class="soft-button" data-action="home">← Início</button></div>`;
 }
@@ -67,10 +69,16 @@ function startGame(levelId) {
   const character = CHARACTERS.find((item) => item.id === progress.selectedCharacter) ?? CHARACTERS[0];
   engine?.destroy();
   engine = new GameEngine(canvas, {
-    onStar: (count) => { const counter = screen.querySelector("#star-counter"); if (counter) counter.textContent = `⭐ ${count}`; },
-    onComplete: finishGame
+    onJump: () => gameAudio.jump(),
+    onStumble: () => gameAudio.tone(190, 0.16, "sine", 0.06),
+    onJumpSuccess: ({ streak }) => {
+      gameAudio.tone(streak >= 3 ? 880 : 660, 0.12, "sine", 0.07);
+    },
+    onStar: (count) => { const counter = screen.querySelector("#star-counter"); if (counter) counter.textContent = `⭐ ${count}`; gameAudio.collect(); },
+    onComplete: (result) => { gameAudio.celebrate(); finishGame(result); }
   });
   engine.start(activeLevel, character);
+  gameAudio.play();
   canvas.addEventListener("pointerdown", () => engine?.jump());
 }
 
@@ -83,6 +91,7 @@ function finishGame(result) {
       <div class="hero-character">🎉</div><p class="eyebrow">MISSÃO CONCLUÍDA</p>
       <h1>Você conseguiu!</h1><p class="intro">Que aventura maravilhosa!</p>
       <div class="reward">⭐ ${result.stars} estrelinhas</div>
+      <p class="small-note">Total de estrelas: ${progress.stars} • Aventuras concluídas: ${progress.completedLevels.length}</p>
       ${button("JOGAR DE NOVO", "replay")}
       ${button("ESCOLHER OUTRO MUNDO", "worlds", "secondary-button")}
     </div>`;
@@ -104,12 +113,12 @@ screen.addEventListener("click", (event) => {
     return renderCharacters();
   }
   const action = target.dataset.action;
-  if (action === "home") { engine?.destroy(); engine = null; renderHome(); }
-  if (action === "worlds") { engine?.destroy(); engine = null; renderWorlds(); }
+  if (action === "home") { engine?.destroy(); engine = null; gameAudio.stop(); renderHome(); }
+  if (action === "worlds") { engine?.destroy(); engine = null; gameAudio.stop(); renderWorlds(); }
   if (action === "characters") renderCharacters();
   if (action === "jump") engine?.jump();
   if (action === "pause") pauseGame();
-  if (action === "resume") { screen.querySelector(".pause-overlay")?.remove(); engine?.resume(); }
+  if (action === "resume") { screen.querySelector(".pause-overlay")?.remove(); engine?.resume(); gameAudio.play(); }
   if (action === "replay") startGame(activeLevel.id);
 });
 
@@ -117,6 +126,7 @@ soundToggle.addEventListener("click", () => {
   progress.soundEnabled = !progress.soundEnabled;
   soundToggle.textContent = progress.soundEnabled ? "🔊" : "🔇";
   saveProgress(progress);
+  gameAudio.setEnabled(progress.soundEnabled);
 });
 soundToggle.textContent = progress.soundEnabled ? "🔊" : "🔇";
 

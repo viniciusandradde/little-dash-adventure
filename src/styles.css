@@ -21,7 +21,7 @@ h1 { margin: 8px 0; font-size: clamp(25px, 5vw, 42px); color: #493b80; }
 .soft-button { min-height: 46px; padding: 10px 18px; border: 2px solid #e5defa; border-radius: 16px; color: #5c4b9d; background: #fff; font-weight: 800; }
 .small-note { margin-top: 22px; color: #a398c3; font-size: 12px; }
 .world-grid, .character-grid, .level-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 24px 0; }
-.world-card, .character-card, .level-card { min-height: 140px; border: 3px solid white; border-radius: 22px; background: var(--world, #fff); color: #493b80; box-shadow: 0 6px 18px #493b8018; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px; }
+.world-card, .character-card, .level-card { min-height: 140px; border: 3px solid white; border-radius: 22px; background: linear-gradient(0deg, rgba(255,255,255,.90), rgba(255,255,255,.52)), var(--world-image, linear-gradient(135deg, var(--world, #fff), #fff)); background-size: cover; background-position: center; color: #493b80; box-shadow: 0 6px 18px #493b8018; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px; }
 .world-emoji { font-size: 44px; }
 .world-card strong, .level-card strong { font-size: clamp(12px, 1.8vw, 17px); }
 .world-card small, .level-card small { font-size: 11px; opacity: .7; }
@@ -38,7 +38,10 @@ h1 { margin: 8px 0; font-size: clamp(25px, 5vw, 42px); color: #493b80; }
 .pause-overlay { position: absolute; inset: 0; display: grid; place-items: center; background: #32265dbb; border-radius: 22px; }
 .pause-overlay > div { background: #fff; padding: 28px; border-radius: 24px; display: grid; gap: 12px; text-align: center; }
 .pause-overlay h2 { margin: 0; }
-.reward { font-size: 24px; font-weight: 900; margin: 20px; color: #e9a62d; }
+.reward { font-size: clamp(24px, 5vw, 34px); font-weight: 900; margin: 20px; color: #e9a62d; animation: reward-pop .65s cubic-bezier(.2,1.5,.5,1) both; }
+@keyframes reward-pop { from { opacity: 0; transform: scale(.55) rotate(-8deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+.celebration .hero-character { animation: celebrate-bounce .8s ease-in-out infinite alternate; }
+@keyframes celebrate-bounce { to { transform: translateY(-12px) rotate(8deg) scale(1.08); } }
 .secondary-button { margin: 16px auto 0; display: block; background: #f39a55; box-shadow: 0 5px 0 #c36c37; font-size: 14px; }
 @media (max-width: 620px) { .world-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; } .world-card { min-height: 110px; } .world-emoji { font-size: 35px; } .character-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .level-grid { grid-template-columns: 1fr; gap: 8px; } .level-card { min-height: 75px; } .home-panel, .selection-panel { padding: 8px; } }
 @media (orientation: portrait) { .game-panel::after { content: "Gire o celular para jogar na horizontal ↻"; position: absolute; inset: 35% 5% auto; padding: 14px; border-radius: 14px; text-align: center; background: #fff; color: #594a94; font-weight: 800; pointer-events: none; } }
