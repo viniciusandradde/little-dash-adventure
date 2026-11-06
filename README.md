@@ -120,6 +120,12 @@ Little Dash Adventure está em desenvolvimento. A experiência está sendo const
 
 As novidades serão apresentadas conforme cada etapa estiver concluída e validada.
 
+## 🏢 Uma criação da VSA Soluções em Tecnologia
+
+**Little Dash Adventure é um software de propriedade da VSA Soluções em Tecnologia**, idealizado e desenvolvido pela VSA como parte de seu portfólio de soluções digitais. A identidade, a experiência e os elementos originais do projeto fazem parte dessa iniciativa.
+
+---
+
 ## 🚀 Embarque nessa aventura
 
 Estamos construindo Little Dash Adventure com uma ideia simples: transformar alguns minutos de brincadeira em momentos de imaginação, alegria e descoberta.
@@ -131,6 +137,11 @@ Estamos construindo Little Dash Adventure com uma ideia simples: transformar alg
 <div align="center">
 
 **LITTLE DASH ADVENTURE**
+
+**Uma solução VSA Soluções em Tecnologia**  
+<sub>Software de propriedade da VSA Soluções em Tecnologia • Todos os direitos reservados.</sub>
+
+<br />
 
 <sub>Feito com carinho para pequenos grandes exploradores. 💛</sub>
 
